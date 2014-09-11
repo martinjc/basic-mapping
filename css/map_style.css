@@ -1,0 +1,9 @@
+.area{ 
+    fill: #C0C0C0;
+    stroke: none;
+}
+
+.boundary {
+    fill: none;
+    stroke: #000;
+}
