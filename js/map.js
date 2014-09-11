@@ -6,6 +6,7 @@ var height = window.innerHeight;
 var projection, boundaries, svg, path, g;
 
 var file_name = "cdf";
+var area = "wards";
 
 var zoom = d3.behavior.zoom()
     .scaleExtent([1, 8])
@@ -21,7 +22,7 @@ function init(width, height) {
     path = d3.geo.path()
         .projection(projection);
 
-    svg = d3.select("body").append("svg")
+    svg = d3.select("#map").append("svg")
         .attr("width", width)
         .attr("height", height);
 
@@ -82,8 +83,8 @@ function draw(boundaries) {
 
 
 function redraw() {
-    width = window.innerWidth - (2 * margin);
-    height = window.innerHeight - (2 * margin);
+    width = window.innerWidth;
+    height = window.innerHeight;
 
     d3.select("svg").remove();
 
@@ -91,12 +92,21 @@ function redraw() {
     draw(boundaries);
 }
 
+function load_data() {
+    d3.json("json/" + area + "_" + file_name + ".json", function(error, b) {
+        if (error) return console.error(error);
+        boundaries = b;
+        redraw(boundaries);
+    });    
+}
+
 
 window.addEventListener('resize', redraw);
-
-d3.json("json/wards_" + file_name + ".json", function(error, b) {
-    if (error) return console.error(error);
-    boundaries = b;
-    draw(boundaries);
+d3.select("#areas").on('change', function(){
+    console.log(this.options[this.selectedIndex].value);
+    area = this.options[this.selectedIndex].value;
+    load_data();
 });
+
+load_data();
 
