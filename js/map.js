@@ -28,13 +28,21 @@ function init(width, height) {
 
     svg.call(zoom);
 
+    function deselect(d) {
+        d3.selectAll(".selected")
+            .attr("class", "area"); 
+        d3.select("#data_table")
+        .html("");      
+    }
+
     // add a blank rectangle to enable zooming from anywhere in the svg
     g.append("rect")
         .attr("x", 0)
         .attr("y", 0)
         .attr("width", width)
         .attr("height", height)
-        .style("fill", "#fff");
+        .style("fill", "#fff")
+        .on('click', deselect);
 }
 
 // move function allows us to pan around the svg
@@ -57,9 +65,7 @@ function create_table(properties) {
 }
 
 function select(d) {
-    console.log(d);
     var id = "#" + d.id;
-    console.log(id);
     d3.selectAll(".selected")
         .attr("class", "area");
     d3.select(id)
@@ -111,14 +117,12 @@ function load_data() {
     d3.json("json/" + area + "_" + file_name + ".json", function(error, b) {
         if (error) return console.error(error);
         boundaries = b;
-        console.log(b);
         redraw();
     });    
 }
 
 window.addEventListener('resize', redraw);
 d3.select("#areas").on('change', function(){
-    console.log(this.options[this.selectedIndex].value);
     area = this.options[this.selectedIndex].value;
     load_data();
 });
