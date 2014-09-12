@@ -1,4 +1,3 @@
-var margin = 40;
 
 var width = window.innerWidth;
 var height = window.innerHeight;
@@ -9,7 +8,6 @@ var file_name = "cdf";
 var area = "wards";
 
 var zoom = d3.behavior.zoom()
-    .scaleExtent([1, 8])
     .on("zoom", move);
 
 init(width, height);
@@ -26,8 +24,9 @@ function init(width, height) {
         .attr("width", width)
         .attr("height", height);
 
-    g = svg.append("g")
-            .call(zoom);
+    g = svg.append("g");
+
+    svg.call(zoom);
 
     // add a blank rectangle to enable zooming from anywhere in the svg
     g.append("rect")
@@ -41,15 +40,12 @@ function init(width, height) {
 // move function allows us to pan around the svg
 function move() {
 
-  var t = d3.event.translate;
-  var s = d3.event.scale;  
-  var h = height / 3;
-  
-  t[0] = Math.min(width / 2 * (s - 1), Math.max(width / 2 * (1 - s), t[0]));
-  t[1] = Math.min(height / 2 * (s - 1) + h * s, Math.max(height / 2 * (1 - s) - h * s, t[1]));
-
-  zoom.translate(t);
-  g.attr("transform", "translate(" + t + ")scale(" + s + ")");
+    g.attr("transform","translate("+ 
+        d3.event.translate.join(",")+")scale("+d3.event.scale+")");
+    g.selectAll("path")
+        .attr("d", path.projection(projection));
+    //g.selectAll("path")  
+    //    .attr("d", path.projection(projection)); 
 
 }
 
@@ -81,6 +77,13 @@ function draw(boundaries) {
         .attr('class', 'boundary');
 }
 
+var throttleTimer;
+function throttle() {
+    window.clearTimeout(throttleTimer);
+    throttleTimer = window.setTimeout(function() {
+      redraw();
+    }, 200);
+}
 
 function redraw() {
     width = window.innerWidth;
@@ -96,12 +99,11 @@ function load_data() {
     d3.json("json/" + area + "_" + file_name + ".json", function(error, b) {
         if (error) return console.error(error);
         boundaries = b;
-        redraw(boundaries);
+        redraw();
     });    
 }
 
-
-window.addEventListener('resize', redraw);
+window.addEventListener('resize', throttle);
 d3.select("#areas").on('change', function(){
     console.log(this.options[this.selectedIndex].value);
     area = this.options[this.selectedIndex].value;
