@@ -9,5 +9,12 @@
 
 .boundary {
     fill: none;
-    stroke: #000;
+    stroke: #777;
+}
+
+.selected {
+    fill: #fff;
+    stroke: #777;
+    stroke-dasharray: 2,2;
+    stroke-linejoin: round;
 }

@@ -39,16 +39,34 @@ function init(width, height) {
 
 // move function allows us to pan around the svg
 function move() {
-
     g.attr("transform","translate("+ 
         d3.event.translate.join(",")+")scale("+d3.event.scale+")");
     g.selectAll("path")
         .attr("d", path.projection(projection));
-    //g.selectAll("path")  
-    //    .attr("d", path.projection(projection)); 
-
 }
 
+function create_table(properties) {
+    var keys = Object.keys(properties);
+
+    table_string = "<table>";
+    for (var i = 0; i < keys.length; i++) {
+        table_string += "<tr><td>" + keys[i] + "</td><td>" + properties[keys[i]] + "</td></tr>";
+    }
+    table_string += "</table>";
+    return table_string;
+}
+
+function select(d) {
+    console.log(d);
+    var id = "#" + d.id;
+    console.log(id);
+    d3.selectAll(".selected")
+        .attr("class", "area");
+    d3.select(id)
+        .attr("class", "selected area")
+    d3.select("#data_table")
+        .html(create_table(d.properties));
+}
 
 function draw(boundaries) {
 
@@ -68,21 +86,15 @@ function draw(boundaries) {
         .data(topojson.feature(boundaries, boundaries.objects[file_name]).features)
         .enter().append("path")
         .attr("class", "area")
-        .attr("id", function(d) { return d.id })
-        .attr("d", path); 
+        .attr("id", function(d) {return d.id})
+        .attr("properties_table", function(d) { return create_table(d.properties)})
+        .attr("d", path)
+        .on("click", function(d){ return select(d)});
 
     g.append("path")
         .datum(topojson.mesh(boundaries, boundaries.objects[file_name], function(a, b){ return a !== b }))
         .attr('d', path)
         .attr('class', 'boundary');
-}
-
-var throttleTimer;
-function throttle() {
-    window.clearTimeout(throttleTimer);
-    throttleTimer = window.setTimeout(function() {
-      redraw();
-    }, 200);
 }
 
 function redraw() {
@@ -99,11 +111,12 @@ function load_data() {
     d3.json("json/" + area + "_" + file_name + ".json", function(error, b) {
         if (error) return console.error(error);
         boundaries = b;
+        console.log(b);
         redraw();
     });    
 }
 
-window.addEventListener('resize', throttle);
+window.addEventListener('resize', redraw);
 d3.select("#areas").on('change', function(){
     console.log(this.options[this.selectedIndex].value);
     area = this.options[this.selectedIndex].value;
