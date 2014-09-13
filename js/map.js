@@ -2,10 +2,9 @@
 var width = parseInt(d3.select("#map").style("width"));
 var height = window.innerHeight;
 
-var projection, boundaries, svg, path, g;
-
-var file_name = "cdf";
-var area = "wards";
+var projection, svg, path, g;
+var boundaries, units;
+var top_level, units;
 
 var zoom = d3.behavior.zoom()
     .on("zoom", move);
@@ -80,7 +79,7 @@ function draw(boundaries) {
         .scale(1)
         .translate([0,0]);
 
-    var b = path.bounds(topojson.feature(boundaries, boundaries.objects[file_name]));
+    var b = path.bounds(topojson.feature(boundaries, boundaries.objects[units]));
     var s = .95 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height);
     var t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
     
@@ -89,7 +88,7 @@ function draw(boundaries) {
         .translate(t);
 
     g.selectAll(".soa")
-        .data(topojson.feature(boundaries, boundaries.objects[file_name]).features)
+        .data(topojson.feature(boundaries, boundaries.objects[units]).features)
         .enter().append("path")
         .attr("class", "area")
         .attr("id", function(d) {return d.id})
@@ -98,7 +97,7 @@ function draw(boundaries) {
         .on("click", function(d){ return select(d)});
 
     g.append("path")
-        .datum(topojson.mesh(boundaries, boundaries.objects[file_name], function(a, b){ return a !== b }))
+        .datum(topojson.mesh(boundaries, boundaries.objects[units], function(a, b){ return a !== b }))
         .attr('d', path)
         .attr('class', 'boundary');
 }
@@ -113,20 +112,19 @@ function redraw() {
     draw(boundaries);
 }
 
-function load_data() {
-    d3.json("json/" + area + "_" + file_name + ".json", function(error, b) {
+function load_data(filename, u) {
+    units = u || "eer";
+    var f = filename || "json/eng/topo_" + units + ".json";
+
+    d3.json(f, function(error, b) {
         if (error) return console.error(error);
         boundaries = b;
-        console.log(boundaries);
+        console.log('boundaries');
         redraw();
     });    
 }
 
 window.addEventListener('resize', redraw);
-d3.select("#areas").on('change', function(){
-    area = this.options[this.selectedIndex].value;
-    load_data();
-});
 
 load_data();
 
