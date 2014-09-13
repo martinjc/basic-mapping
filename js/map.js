@@ -4,7 +4,6 @@ var height = window.innerHeight;
 
 var projection, svg, path, g;
 var boundaries, units;
-var top_level, units;
 
 var zoom = d3.behavior.zoom()
     .on("zoom", move);
