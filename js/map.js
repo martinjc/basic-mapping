@@ -1,5 +1,5 @@
 
-var width = window.innerWidth;
+var width = parseInt(d3.select("#map").style("width"));
 var height = window.innerHeight;
 
 var projection, boundaries, svg, path, g;
@@ -104,7 +104,7 @@ function draw(boundaries) {
 }
 
 function redraw() {
-    width = window.innerWidth;
+    width = parseInt(d3.select("#map").style("width"));
     height = window.innerHeight;
 
     d3.select("svg").remove();
@@ -117,6 +117,7 @@ function load_data() {
     d3.json("json/" + area + "_" + file_name + ".json", function(error, b) {
         if (error) return console.error(error);
         boundaries = b;
+        console.log(boundaries);
         redraw();
     });    
 }

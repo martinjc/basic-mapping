@@ -1,5 +1,13 @@
-#choiceform {
-    /*height: 80px;*/
+
+
+#left_column {
+    width: 25%;
+    float:left;
+}
+
+#map {
+    width:75%;
+    float: right;
 }
 
 .area{ 
