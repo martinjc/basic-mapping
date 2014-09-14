@@ -112,8 +112,8 @@ function redraw() {
 }
 
 function load_data(filename, u) {
-    units = u || "eer";
-    var f = filename || "json/eng/topo_" + units + ".json";
+    units = u || "nawer";
+    var f = filename || "json/wal/topo_" + units + ".json";
 
     d3.json(f, function(error, b) {
         if (error) return console.error(error);
