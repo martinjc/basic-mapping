@@ -7,6 +7,15 @@
     <body>
 
         <div id="left_column">
+            <h1>UK-GeoJSON</h1>
+            <p>GeoJSON versions of UK Boundary Data</p>
+
+            <p class="view"><a href="https://github.com/martinjc/UK-GeoJSON">View the Project on GitHub <small>martinjc/UK-GeoJSON</small></a></p>
+
+        <p>This archive contains TopoJSON files of data for UK boundaries, ideal for creating choropleth maps of UK areas.</p>
+
+        <p>All data is converted from the generalised clipped boundaries provided by the Office of National Statistics, National Records Scotland and Ordnance Survey. Data has been converted to GeoJSON from original shapefiles using ogr2ogr, then converted to TopoJSON using topojson. </p>
+
             <form id="choiceform">
                 <p> 
                     I would like boundary data for
@@ -15,16 +24,12 @@
                         <option value="wal">Wales</option>
                         <option value="sco">Scotland</option>
                     </select>
-                </p>
-                <p id="council_choice">
                     at the  
                     <select name="lad" id="lad">
                         <option value="national">National</option>
                         <option disabled>──────────</option>
                     </select>
                     level
-                </p>
-                <p>
                     divided into
                     <select name="resolution" id="resolution">
                         <option value="eer">European Electoral Regions</option>
@@ -36,11 +41,16 @@
             </form>
             <section id="data_table">
             </section>
-            <section id="download">
-            </section>
         </div>
-        <section id="map">
-        </section>
+        <div id="#right_column">
+            <section id="map">
+            </section>
+            <a id="#download">download topoJSON</a>
+        </div>
+        <footer>
+            <p>This project is maintained by <a href="https://github.com/martinjc">martinjc</a></p>
+            <p><small>Hosted on GitHub Pages &mdash; Theme adapted from original theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        </footer>
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.1.0/topojson.min.js"></script>

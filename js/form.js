@@ -70,20 +70,14 @@ function change_area() {
     var lad_select = document.getElementById('lad');
     var lad = lad_select.options[lad_select.selectedIndex].value;
 
-    console.log(units);
-    console.log(area);
-    console.log(lad);
-
     var f;
     if(lad === 'national') {
         var f = 'json/' + area + '/topo_' + units + '.json';
-        console.log(f);
-        d3.select('#download').append('a').attr('href', f).text('download topoJSON');
+        //d3.select('#download').append('a').attr('href', f).attr('target', '_blank').text('download topoJSON');
         load_data(f, units);
     } else {
         var f = 'json/' + area + '/' + units + '_by_lad/topo_' + lad + '.json';
-        console.log(f);
-        d3.select('#download').append('a').attr('href', f).text('download topoJSON');
+        //d3.select('#download').append('a').attr('href', f).attr('target', '_blank').text('download topoJSON');
         load_data(f, lad);
     }
 }
@@ -94,8 +88,8 @@ d3.select('#lad').on('change', function(){
 });
 
 d3.select("#top_level").on('change', function(){
-    update_resolution_select();
     update_lad_select();
+    update_resolution_select();
     change_area();
 });
 

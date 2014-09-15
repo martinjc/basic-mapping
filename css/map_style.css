@@ -1,13 +1,81 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
 
+body {
+  padding:20px;
+  font:14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color:#777;
+  font-weight:300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color:#222;
+  margin:0 0 20px;
+}
+
+p, ul, ol, table, pre, dl {
+  margin:0 0 20px;
+}
+
+h1, h2, h3 {
+  line-height:1.1;
+}
+
+h1 {
+  font-size:28px;
+}
+
+h2 {
+  color:#393939;
+}
+
+h3, h4, h5, h6 {
+  color:#494949;
+}
+
+a {
+  color:#39c;
+  font-weight:400;
+  text-decoration:none;
+}
+
+a small {
+  font-size:11px;
+  color:#777;
+  margin-top:-0.6em;
+  display:block;
+}
+
+table {
+  width:100%;
+  border-collapse:collapse;
+}
+
+th, td {
+  text-align:left;
+  padding:5px 10px;
+  border-bottom:1px solid #e5e5e5;
+}
+
+footer {
+  clear: both;
+  float:left;
+  bottom:50px;
+}
 
 #left_column {
-    width: 25%;
+    width: 30%;
     float:left;
 }
 
 #map {
-    width:75%;
+    width:65%;
     float: right;
+}
+
+#download {
+    float: right;
+    font-size:28px;
+    font-weight: 700;
 }
 
 .area{ 
@@ -25,8 +93,4 @@
     stroke: #777;
     stroke-dasharray: 2,2;
     stroke-linejoin: round;
-}
-
-.hidden {
-    display: none;
 }
