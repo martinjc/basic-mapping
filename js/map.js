@@ -5,10 +5,14 @@ var height = window.innerHeight;
 var projection, svg, path, g;
 var boundaries, units;
 
-var zoom = d3.behavior.zoom()
-    .on("zoom", move);
-
 init(width, height);
+
+function deselect() {
+    d3.selectAll(".selected")
+        .attr("class", "area"); 
+    d3.select("#data_table")
+        .html("");      
+}
 
 function init(width, height) {
 
@@ -24,15 +28,6 @@ function init(width, height) {
 
     g = svg.append("g");
 
-    svg.call(zoom);
-
-    function deselect(d) {
-        d3.selectAll(".selected")
-            .attr("class", "area"); 
-        d3.select("#data_table")
-        .html("");      
-    }
-
     // add a blank rectangle to enable zooming from anywhere in the svg
     g.append("rect")
         .attr("x", 0)
@@ -41,14 +36,6 @@ function init(width, height) {
         .attr("height", height)
         .style("fill", "#fff")
         .on('click', deselect);
-}
-
-// move function allows us to pan around the svg
-function move() {
-    g.attr("transform","translate("+ 
-        d3.event.translate.join(",")+")scale("+d3.event.scale+")");
-    g.selectAll("path")
-        .attr("d", path.projection(projection));
 }
 
 function create_table(properties) {
@@ -112,18 +99,18 @@ function redraw() {
 }
 
 function load_data(filename, u) {
+    deselect();
     units = u || "sper";
     var f = filename || "json/sco/topo_" + units + ".json";
 
     d3.json(f, function(error, b) {
         if (error) return console.error(error);
         boundaries = b;
-        console.log('boundaries');
+        console.log(boundaries);
         redraw();
     });    
 }
 
 window.addEventListener('resize', redraw);
 
-load_data();
 
