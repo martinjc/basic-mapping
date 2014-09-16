@@ -51,9 +51,9 @@ function update_resolution_select() {
             options_string += '<option value="lsoa">Lower Layer Super Output Areas</option>';
         } else if (area === 'sco') {
             options_string += '<option value="idz">Intermediate Data Zones</option>';
-            options_string += '<option value="dz">Data Zones</option';
+            options_string += '<option value="dz">Data Zones</option>';
         }
-        options_string += '<option value="oa">Output Areas</option';
+        options_string += '<option value="oa">Output Areas</option>';
     }
     d3.select('#resolution').html(options_string);
 }
