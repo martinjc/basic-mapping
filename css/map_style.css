@@ -7,16 +7,16 @@ body {
   font-weight:300;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
   color:#222;
   margin:0 0 20px;
 }
 
-p, ul, ol, table, pre, dl {
-  margin:0 0 20px;
+p, table {
+  margin:0 0 10px;
 }
 
-h1, h2, h3 {
+h1 {
   line-height:1.1;
 }
 
@@ -24,25 +24,10 @@ h1 {
   font-size:28px;
 }
 
-h2 {
-  color:#393939;
-}
-
-h3, h4, h5, h6 {
-  color:#494949;
-}
-
 a {
   color:#39c;
   font-weight:400;
   text-decoration:none;
-}
-
-a small {
-  font-size:11px;
-  color:#777;
-  margin-top:-0.6em;
-  display:block;
 }
 
 table {
@@ -56,21 +41,35 @@ th, td {
   border-bottom:1px solid #e5e5e5;
 }
 
-footer {
-  clear: both;
-  float:left;
-  bottom:50px;
+.title {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.content {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+#data_table {
+    height: 200px;
+}
+
+#choiceform {
+    padding-top: 20px;
+    border-top: 1px solid #e5e5e5;
 }
 
 #left_column {
-    width: 30%;
+    width: 35%;
     float:left;
 }
 
-#map {
-    width:65%;
+#right_column {
+    width: 65%;
     float: right;
 }
+
 
 #download {
     float: right;
